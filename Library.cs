@@ -8,6 +8,8 @@ namespace LexiconC_Slutuppgift_SmartBook
 {
     class Library
     {
-        List<Book> Collection = new List<Book>();
+        public List<Book> collection = new List<Book>();
+        public List<Author> authors = new List<Author>();
+        public List<string> cathegorys = new List<string>();
     }
 }
