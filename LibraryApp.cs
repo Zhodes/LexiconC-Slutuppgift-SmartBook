@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
@@ -15,24 +16,24 @@ static class LibraryApp
 
     static Library library = new Library();
 
-    static public void populateWithExampleLibrary()
-    {
-        Author author = new Author("jesus", "kristus");
-        string cathegory = "Religion";
-        Book book = new Book("Bibeln", author, cathegory, "777");
-        library.authors.Add(author);
-        library.cathegorys.Add(cathegory);
-        //author.Books.Add(book);
-        library.collection.Add(book);
+    //static public void populateWithExampleLibrary()
+    //{
+    //    Author author = new Author("jesus", "kristus");
+    //    string cathegory = "Religion";
+    //    Book book = new Book("Bibeln", author, cathegory, "1234567890");
+    //    library.authors.Add(author);
+    //    library.Cathegorys.Add(cathegory);
+    //    //author.Books.Add(book);
+    //    library.collection.Add(book);
 
-        author = new Author("J.R.R.", "Tolkien");
-        cathegory = "Fantasy";
-        book = new Book("Bilbo - En Hobbits Äventyr", author, cathegory, "9789172631649");
-        library.authors.Add(author);
-        library.cathegorys.Add(cathegory);
-        //author.Books.Add(book);
-        library.collection.Add(book);
-    }
+    //    author = new Author("J.R.R.", "Tolkien");
+    //    cathegory = "Fantasy";
+    //    book = new Book("Bilbo - En Hobbits Äventyr", author, cathegory, "9789172631649");
+    //    library.authors.Add(author);
+    //    library.cathegorys.Add(cathegory);
+    //    //author.Books.Add(book);
+    //    library.collection.Add(book);
+    //}
 
 
     static private bool clearConsole = true;
@@ -106,19 +107,19 @@ static class LibraryApp
         throw new NotImplementedException();
     }
 
-    private static void LoadLibraryFromFile()
+    public static void LoadLibraryFromFile()
     {
 
         library.collection = JsonSerializer.Deserialize<List<Book>>(File.ReadAllText("collection.json"));
         library.authors = JsonSerializer.Deserialize<List<Author>>(File.ReadAllText("authors.json"));
-        library.cathegorys = JsonSerializer.Deserialize<List<string>>(File.ReadAllText("cathegorys.json"));
+        library.Cathegorys = JsonSerializer.Deserialize<List<string>>(File.ReadAllText("cathegorys.json"));
     }
 
     private static void SaveLibraryToFile()
     {
         File.WriteAllText("collection.json", JsonSerializer.Serialize(library.collection));
         File.WriteAllText("authors.json", JsonSerializer.Serialize(library.authors));
-        File.WriteAllText("cathegorys.json", JsonSerializer.Serialize(library.cathegorys));
+        File.WriteAllText("cathegorys.json", JsonSerializer.Serialize(library.Cathegorys));
     }
 
     private static void SearchInLibrary()
@@ -262,9 +263,12 @@ static class LibraryApp
 
     private static void ListAllBooks()
     {
-        for (int i = 0; i < library.collection.Count; i++)
+        var orderedBooks = library.collection
+        .OrderBy(book => book.Title);
+
+        foreach (var (index, book) in orderedBooks.Index())
         {
-            Console.WriteLine($"{i + 1}. {library.collection[i].Title}");
+            Console.WriteLine($"{index+1} {book.Title}");
         }
     }
 
@@ -370,37 +374,115 @@ static class LibraryApp
         var selector = selectorExpression.Compile();
         string propertyName = GetPropertyName(selectorExpression);
         string inputString = "";
+        int selection = 0;
         while (true)
         {
             Console.Clear();
 
-            Console.WriteLine($"Type the {propertyName} of the book you want to select, press Enter to select the first option in list.");
+            Console.WriteLine($"Type the {propertyName} of the book you want to select or use the arrows to go trough list.");
             Console.WriteLine(inputString);
 
-            // Use the selector to query the library
+
             IEnumerable<Book> bookSelection = library.collection
                 .Where(book => selector(book)
                 .StartsWith(inputString, StringComparison.OrdinalIgnoreCase));
 
-            foreach (Book book in bookSelection)
-            {
-                Console.WriteLine(selector(book));
-            }
 
+
+            foreach (var (index, book) in bookSelection.Index())
+            {
+                Console.WriteLine($"{(index == selection ? "> " : "")}{selector(book)}");
+
+            }
 
 
             ConsoleKeyInfo inputKey = Console.ReadKey(intercept: true);
             if (inputKey.Key == ConsoleKey.Enter)
             {
-                return bookSelection.FirstOrDefault();
+                return bookSelection.ElementAt(selection);
             }
-            if (inputKey.Key == ConsoleKey.Escape)
+            else if (inputKey.Key == ConsoleKey.Escape)
             {
                 MainMenu();
             }
+            else if (inputKey.Key == ConsoleKey.DownArrow)
+            {
+                if (selection < bookSelection.Count() - 1)
+                    selection++;
+            }
+            else if (inputKey.Key == ConsoleKey.UpArrow)
+            {
+                if (selection > 0)
+                    selection--;
+            }
+            else
+            {
 
-            char inputChar = inputKey.KeyChar;
-            inputString += inputChar;
+                char inputChar = inputKey.KeyChar;
+                inputString += inputChar;
+            }
+
+        }
+    }
+
+    private static Author SelectOrAddAuthor()
+    {
+        string inputString = "";
+        int selection = 0;
+        while (true)
+        {
+            Console.Clear();
+
+            Console.WriteLine($"Type the name of the author you want to select or use the arrows to go trough list.");
+            Console.WriteLine(inputString);
+
+
+            IEnumerable<Author> authorSelection = library.authors
+                .Where(author => author.ToString()
+                .StartsWith(inputString, StringComparison.OrdinalIgnoreCase));
+
+            //if(authorSelection.Count() == 0) selection = 0;
+            if (selection > authorSelection.Count() - 1) selection = authorSelection.Count() - 1;
+            Console.WriteLine($"{(-1 == selection ? "> " : "")}Add Author");
+
+            foreach (var (index, author) in authorSelection.Index())
+            {
+                Console.WriteLine($"{(index == selection ? "> " : "")}{author.ToString()}");
+
+            }
+
+
+            ConsoleKeyInfo inputKey = Console.ReadKey(intercept: true);
+            if (inputKey.Key == ConsoleKey.Enter)
+            {
+                if (selection == -1) return AddAuthor();
+                return authorSelection.ElementAt(selection);
+            }
+            else if (inputKey.Key == ConsoleKey.Backspace)
+            {
+                inputString = inputString.Remove(inputString.Length - 1);
+            }
+            else if (inputKey.Key == ConsoleKey.Escape)
+            {
+                MainMenu();
+            }
+            else if (inputKey.Key == ConsoleKey.DownArrow)
+            {
+                if (selection < authorSelection.Count() - 1)
+                    selection++;
+            }
+            else if (inputKey.Key == ConsoleKey.UpArrow)
+            {
+                if (selection > -1)
+                    selection--;
+            }
+            else
+            {
+
+                char inputChar = inputKey.KeyChar;
+                inputString += inputChar;
+            }
+
         }
     }
 
@@ -481,11 +563,73 @@ static class LibraryApp
     {
         Book book = new Book();
         AddTitle(book);
-        book.Author = SetAuthor();
-        book.Cathegory = SetCathegory();
+        book.Author = SelectOrAddAuthor();
+        book.Cathegory = SelectOrAddCathegory();
         AddISBN(book);
         library.collection.Add(book);
         //author.Books.Add(book);
+    }
+
+    private static string SelectOrAddCathegory()
+    {
+
+        string inputString = "";
+        int selection = 0;
+        while (true)
+        {
+            Console.Clear();
+
+            Console.WriteLine($"Type the cathegory you want to select or use the arrows to go trough list.");
+            Console.WriteLine(inputString);
+
+
+            IEnumerable<string> cathegorySelection = library.Cathegorys
+                .Where(cathegory => cathegory
+                .StartsWith(inputString, StringComparison.OrdinalIgnoreCase));
+
+
+            if (selection > cathegorySelection.Count() - 1) selection = cathegorySelection.Count() - 1;
+            Console.WriteLine($"{(-1 == selection ? "> " : "")}Add Cathegory");
+
+            foreach (var (index, cathegory) in cathegorySelection.Index())
+            {
+                Console.WriteLine($"{(index == selection ? "> " : "")}{cathegory}");
+
+            }
+
+
+            ConsoleKeyInfo inputKey = Console.ReadKey(intercept: true);
+            if (inputKey.Key == ConsoleKey.Enter)
+            {
+                if (selection == -1) return AddCathegory();
+                return cathegorySelection.ElementAt(selection);
+            }
+            else if (inputKey.Key == ConsoleKey.Backspace)
+            {
+                inputString = inputString.Remove(inputString.Length - 1);
+            }
+            else if (inputKey.Key == ConsoleKey.Escape)
+            {
+                MainMenu();
+            }
+            else if (inputKey.Key == ConsoleKey.DownArrow)
+            {
+                if (selection < cathegorySelection.Count() - 1)
+                    selection++;
+            }
+            else if (inputKey.Key == ConsoleKey.UpArrow)
+            {
+                if (selection > -1)
+                    selection--;
+            }
+            else
+            {
+
+                char inputChar = inputKey.KeyChar;
+                inputString += inputChar;
+            }
+
+        }
     }
 
     private static void AddISBN(Book book)
@@ -494,7 +638,12 @@ static class LibraryApp
         while (!isValidISBN)
         {
             Console.WriteLine("Enter the ISBN of the book");
-            try { book.ISBN = Console.ReadLine(); }
+            string input = Console.ReadLine();
+            try
+            {
+                library.TrySetISBN(book, input);
+                isValidISBN = true;
+            }
             catch (ArgumentException e) { Console.WriteLine(e.Message); }
         }
     }
@@ -502,12 +651,12 @@ static class LibraryApp
     private static string SetCathegory()
     {
 
-        string message = $"Choose cathegory from list using numbers 1 to {library.cathegorys.Count}. Write 'new' if cathegory is not in list and you would like to add a cathegory\n";
+        string message = $"Choose cathegory from list using numbers 1 to {library.Cathegorys.Count}. Write 'new' if cathegory is not in list and you would like to add a cathegory\n";
         Console.WriteLine(message);
-        for (int i = 0; i < library.cathegorys.Count; i++)
+        for (int i = 0; i < library.Cathegorys.Count; i++)
         {
 
-            Console.WriteLine($"{i + 1}. {library.cathegorys[i]}");
+            Console.WriteLine($"{i + 1}. {library.Cathegorys[i]}");
         }
         while (true)
         {
@@ -517,7 +666,7 @@ static class LibraryApp
             {
                 try
                 {
-                    return library.cathegorys[authorSelection - 1];
+                    return library.Cathegorys[authorSelection - 1];
                 }
                 catch (ArgumentOutOfRangeException)
                 {
@@ -537,12 +686,28 @@ static class LibraryApp
     private static string AddCathegory()
     {
         Console.WriteLine("Write the Cathegory you would like to add.");
-        string input = Console.ReadLine();
-        library.cathegorys.Add(input);
-        return input;
+        bool isvalidInput = false;
+        string cathegory = "";
+        while (!isvalidInput)
+        {
+            cathegory = Console.ReadLine();
+            try
+            {
+                library.TryAddCathegory(cathegory);
+                isvalidInput = true;
+
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+
+            }
+
+        }
+        return cathegory;
     }
 
-    private static Author SetAuthor()
+    private static Author SetAuthor(Book book)
     {
         string errorMessage = $"Choose author from list using numbers 1 to {library.authors.Count}. Write 'new' if author is not in list and you would like to add an author\n";
         Console.WriteLine("Choose author from list using numbers. Write 'new' if author is not in list and you would like to add an author");

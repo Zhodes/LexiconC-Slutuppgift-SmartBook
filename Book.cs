@@ -42,10 +42,6 @@ namespace LexiconC_Slutuppgift_SmartBook
                 {
                     if (value.Length == 10 | value.Length == 13)
                     {
-                        //if ()
-                        //{
-
-                        //}
                             isbn = value;
                     }
                     else throw new ArgumentException("ISBN must be 10 or 13 digits long.");
