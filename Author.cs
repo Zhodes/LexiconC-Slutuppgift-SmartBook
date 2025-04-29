@@ -15,14 +15,14 @@ namespace LexiconC_Slutuppgift_SmartBook
             //Books = new List<Book>();
         }
         public string FirstName { get; set; }
-        public string MiddleNames { get; set; }
+        //public string MiddleNames { get; set; }
         public string LastName { get; set; }
 
         //public List<Book> Books { get; set; }
 
         public override string ToString()
         {
-            return $"{LastName}, {FirstName} {MiddleNames}";
+            return $"{LastName}, {FirstName}";
         }
     }
 }

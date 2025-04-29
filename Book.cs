@@ -8,15 +8,20 @@ namespace LexiconC_Slutuppgift_SmartBook
 {
     class Book
     {
-        static int ISBNCount = 0;
+
+        
+        public Book()
+        {
+            
+        }
+
         public Book(string title, Author author, string cathegory)
         {
             Title = title;
             Author = author;
             Cathegory = cathegory;
             Available = true;
-            ISBNCount ++;
-            ISBN = ISBNCount.ToString();
+            
         }
 
         public Book(string title, Author author, string cathegory, string Isbn)
@@ -27,8 +32,34 @@ namespace LexiconC_Slutuppgift_SmartBook
             Available = true;
             ISBN = Isbn;
         }
+        private string isbn = string.Empty;
+        public string ISBN
+        {
+            get { return isbn; }
+            set 
+            {
+                if (value.All(char.IsDigit))
+                {
+                    if (value.Length == 10 | value.Length == 13)
+                    {
+                        //if ()
+                        //{
 
-        public string ISBN { get; set; }
+                        //}
+                            isbn = value;
+                    }
+                    else throw new ArgumentException("ISBN must be 10 or 13 digits long.");
+
+
+                }
+                else throw new ArgumentException("ISBN must contain only digits.");
+                
+                
+            
+            }
+        }
+
+
         public string Title { get; set; }
         public Author Author { get; set; }
         public string Cathegory { get; set; }

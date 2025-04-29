@@ -108,12 +108,17 @@ static class LibraryApp
 
     private static void LoadLibraryFromFile()
     {
-        library = JsonSerializer.Deserialize<Library>(File.ReadAllText("library.json"));
+
+        library.collection = JsonSerializer.Deserialize<List<Book>>(File.ReadAllText("collection.json"));
+        library.authors = JsonSerializer.Deserialize<List<Author>>(File.ReadAllText("authors.json"));
+        library.cathegorys = JsonSerializer.Deserialize<List<string>>(File.ReadAllText("cathegorys.json"));
     }
 
     private static void SaveLibraryToFile()
     {
-        File.WriteAllText("library.json", JsonSerializer.Serialize(library));
+        File.WriteAllText("collection.json", JsonSerializer.Serialize(library.collection));
+        File.WriteAllText("authors.json", JsonSerializer.Serialize(library.authors));
+        File.WriteAllText("cathegorys.json", JsonSerializer.Serialize(library.cathegorys));
     }
 
     private static void SearchInLibrary()
@@ -159,14 +164,14 @@ static class LibraryApp
     private static void BookMenu(Book book)
     {
         bool validInput = false;
-            Console.WriteLine($"Options for {book.Title}:"
-                +"\n1. Update Availability"
-                +"\n2. Remove Book"
-                +"\n0. Return To Main Menu");
+        Console.WriteLine($"Options for {book.Title}:"
+            + "\n1. Update Availability"
+            + "\n2. Remove Book"
+            + "\n0. Return To Main Menu");
         while (!validInput)
         {
             Console.WriteLine("Navigate by pressing digits");
-                
+
             char input = ' ';
             input = Console.ReadKey(intercept: true).KeyChar;
             switch (input)
@@ -233,7 +238,7 @@ static class LibraryApp
         {
             while (!validInput)
             {
-                
+
                 string input = Console.ReadLine();
                 switch (input)
                 {
@@ -252,7 +257,7 @@ static class LibraryApp
             }
         }
         else { ChooseYesOrNo(book); }
-        
+
     }
 
     private static void ListAllBooks()
@@ -373,18 +378,21 @@ static class LibraryApp
             Console.WriteLine(inputString);
 
             // Use the selector to query the library
-            IEnumerable<Book> q1 = library.collection
-                .Where(book => selector(book).StartsWith(inputString, StringComparison.OrdinalIgnoreCase));
+            IEnumerable<Book> bookSelection = library.collection
+                .Where(book => selector(book)
+                .StartsWith(inputString, StringComparison.OrdinalIgnoreCase));
 
-            foreach (Book book in q1)
+            foreach (Book book in bookSelection)
             {
                 Console.WriteLine(selector(book));
             }
 
+
+
             ConsoleKeyInfo inputKey = Console.ReadKey(intercept: true);
             if (inputKey.Key == ConsoleKey.Enter)
             {
-                return q1.FirstOrDefault();
+                return bookSelection.FirstOrDefault();
             }
             if (inputKey.Key == ConsoleKey.Escape)
             {
@@ -456,7 +464,7 @@ static class LibraryApp
         Console.WriteLine($"You have selected the following book:\n"
         + book.ToString());
         bool validInput = false;
-        
+
 
     }
 
@@ -471,20 +479,24 @@ static class LibraryApp
 
     private static void AddBook()
     {
-        string title = AddTitle();
-        Author author = SetAuthor();
-        string cathegory = SetCathegory();
-        string ISBN = AddISBN();
-        Book book = new Book(title, author, cathegory, ISBN);
+        Book book = new Book();
+        AddTitle(book);
+        book.Author = SetAuthor();
+        book.Cathegory = SetCathegory();
+        AddISBN(book);
         library.collection.Add(book);
         //author.Books.Add(book);
     }
 
-    private static string AddISBN()
+    private static void AddISBN(Book book)
     {
-        Console.WriteLine("Enter the ISBN of the book");
-        string input = Console.ReadLine();
-        return input;
+        bool isValidISBN = false;
+        while (!isValidISBN)
+        {
+            Console.WriteLine("Enter the ISBN of the book");
+            try { book.ISBN = Console.ReadLine(); }
+            catch (ArgumentException e) { Console.WriteLine(e.Message); }
+        }
     }
 
     private static string SetCathegory()
@@ -575,10 +587,11 @@ static class LibraryApp
         return author;
     }
 
-    private static string AddTitle()
+    private static void AddTitle(Book book)
     {
+
         Console.WriteLine("Enter the books Title:");
-        string title = Console.ReadLine();
-        return title;
+        book.Title = Console.ReadLine();
+
     }
 }
