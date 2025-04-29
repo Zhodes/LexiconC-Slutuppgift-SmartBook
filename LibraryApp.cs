@@ -4,6 +4,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace LexiconC_Slutuppgift_SmartBook;
@@ -19,14 +21,16 @@ static class LibraryApp
         string cathegory = "Religion";
         Book book = new Book("Bibeln", author, cathegory, "777");
         library.authors.Add(author);
-        author.Books.Add(book);
+        library.cathegorys.Add(cathegory);
+        //author.Books.Add(book);
         library.collection.Add(book);
 
         author = new Author("J.R.R.", "Tolkien");
         cathegory = "Fantasy";
         book = new Book("Bilbo - En Hobbits Äventyr", author, cathegory, "9789172631649");
         library.authors.Add(author);
-        author.Books.Add(book);
+        library.cathegorys.Add(cathegory);
+        //author.Books.Add(book);
         library.collection.Add(book);
     }
 
@@ -104,12 +108,12 @@ static class LibraryApp
 
     private static void LoadLibraryFromFile()
     {
-        throw new NotImplementedException();
+        library = JsonSerializer.Deserialize<Library>(File.ReadAllText("library.json"));
     }
 
     private static void SaveLibraryToFile()
     {
-        throw new NotImplementedException();
+        File.WriteAllText("library.json", JsonSerializer.Serialize(library));
     }
 
     private static void SearchInLibrary()
@@ -174,6 +178,9 @@ static class LibraryApp
                     break;
                 case '2':
                     RemoveBookConfirmation(book);
+                    validInput = true;
+                    break;
+                case '0':
                     validInput = true;
                     break;
                 default:
@@ -252,7 +259,7 @@ static class LibraryApp
     {
         for (int i = 0; i < library.collection.Count; i++)
         {
-            Console.WriteLine($"{i + 1}. {library.collection[0].Title}");
+            Console.WriteLine($"{i + 1}. {library.collection[i].Title}");
         }
     }
 
@@ -456,7 +463,7 @@ static class LibraryApp
     private static void RemoveBook(Book book)
     {
         Console.WriteLine($"{book.Title} has been removed");
-        book.Author.Books.Remove(book);
+        //book.Author.Books.Remove(book);
         library.collection.Remove(book);
 
     }
@@ -470,7 +477,7 @@ static class LibraryApp
         string ISBN = AddISBN();
         Book book = new Book(title, author, cathegory, ISBN);
         library.collection.Add(book);
-        author.Books.Add(book);
+        //author.Books.Add(book);
     }
 
     private static string AddISBN()

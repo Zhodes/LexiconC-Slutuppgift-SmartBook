@@ -12,13 +12,13 @@ namespace LexiconC_Slutuppgift_SmartBook
         {
             FirstName = firstName;
             LastName = lastName;
-            Books = new List<Book>();
+            //Books = new List<Book>();
         }
         public string FirstName { get; set; }
         public string MiddleNames { get; set; }
         public string LastName { get; set; }
 
-        public List<Book> Books { get; set; }
+        //public List<Book> Books { get; set; }
 
         public override string ToString()
         {
