@@ -16,26 +16,6 @@ static class LibraryApp
 
     static Library library = new Library();
 
-    //static public void populateWithExampleLibrary()
-    //{
-    //    Author author = new Author("jesus", "kristus");
-    //    string cathegory = "Religion";
-    //    Book book = new Book("Bibeln", author, cathegory, "1234567890");
-    //    library.authors.Add(author);
-    //    library.Cathegorys.Add(cathegory);
-    //    //author.Books.Add(book);
-    //    library.collection.Add(book);
-
-    //    author = new Author("J.R.R.", "Tolkien");
-    //    cathegory = "Fantasy";
-    //    book = new Book("Bilbo - En Hobbits Äventyr", author, cathegory, "9789172631649");
-    //    library.authors.Add(author);
-    //    library.cathegorys.Add(cathegory);
-    //    //author.Books.Add(book);
-    //    library.collection.Add(book);
-    //}
-
-
     static private bool clearConsole = true;
 
     static public void MainMenu()
@@ -510,35 +490,7 @@ static class LibraryApp
         throw new InvalidOperationException("Unsupported expression type for property name extraction.");
     }
 
-    //private static Book SelectBookByTitle()
-    //{
-    //    string inputString = "";
-    //    while (true)
-    //    {
-    //        Console.Clear();
 
-    //        Console.WriteLine("Type the Title of the book you would whant to remove, press enter to select the first option in list. ");
-    //        Console.WriteLine(inputString);
-    //        IEnumerable<Book> q1 = library.collection.Where(book => book.Title.StartsWith(inputString));
-
-    //        foreach (Book book in q1)
-    //        {
-    //            Console.WriteLine(book.Title);
-    //        }
-    //        ConsoleKeyInfo inputKey = Console.ReadKey(intercept: true);
-    //        if (inputKey.Key == ConsoleKey.Enter)
-    //        {
-    //            return q1.First();
-    //        }
-    //        if (inputKey.Key == ConsoleKey.Escape)
-    //        {
-    //            MainMenu();
-    //        }
-    //        char inputChar = inputKey.KeyChar;
-    //        inputString += inputChar;
-
-    //    }
-    //}
     private static void RemoveBookConfirmation(Book book)
     {
 
@@ -648,41 +600,6 @@ static class LibraryApp
         }
     }
 
-    private static string SetCathegory()
-    {
-
-        string message = $"Choose cathegory from list using numbers 1 to {library.Cathegorys.Count}. Write 'new' if cathegory is not in list and you would like to add a cathegory\n";
-        Console.WriteLine(message);
-        for (int i = 0; i < library.Cathegorys.Count; i++)
-        {
-
-            Console.WriteLine($"{i + 1}. {library.Cathegorys[i]}");
-        }
-        while (true)
-        {
-            string input = Console.ReadLine();
-            if (input == "new") return AddCathegory();
-            else if (Int32.TryParse(input, out int authorSelection))
-            {
-                try
-                {
-                    return library.Cathegorys[authorSelection - 1];
-                }
-                catch (ArgumentOutOfRangeException)
-                {
-                    Console.WriteLine("Number was out of range.");
-                    Console.WriteLine(message);
-                }
-            }
-            else
-            {
-                Console.WriteLine(message);
-            }
-
-        }
-
-    }
-
     private static string AddCathegory()
     {
         Console.WriteLine("Write the Cathegory you would like to add.");
@@ -706,40 +623,6 @@ static class LibraryApp
         }
         return cathegory;
     }
-
-    private static Author SetAuthor(Book book)
-    {
-        string errorMessage = $"Choose author from list using numbers 1 to {library.authors.Count}. Write 'new' if author is not in list and you would like to add an author\n";
-        Console.WriteLine("Choose author from list using numbers. Write 'new' if author is not in list and you would like to add an author");
-        for (int i = 0; i < library.authors.Count; i++)
-        {
-
-            Console.WriteLine($"{i + 1}. {library.authors[i].ToString()}");
-        }
-        while (true)
-        {
-            string input = Console.ReadLine();
-            if (input == "new") return AddAuthor();
-            else if (Int32.TryParse(input, out int authorSelection))
-            {
-                try
-                {
-                    return library.authors[authorSelection - 1];
-                }
-                catch (ArgumentOutOfRangeException e)
-                {
-                    Console.WriteLine("Number was out of range.");
-                    Console.WriteLine(errorMessage);
-                }
-            }
-            else
-            {
-                Console.WriteLine(errorMessage);
-            }
-
-        }
-    }
-
 
     private static Author AddAuthor()
     {

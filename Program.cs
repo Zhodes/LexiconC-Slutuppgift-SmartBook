@@ -4,7 +4,6 @@
     {
         static void Main(string[] args)
         {
-            //LibraryApp.populateWithExampleLibrary();
             LibraryApp.LoadLibraryFromFile();
             LibraryApp.MainMenu();
 
