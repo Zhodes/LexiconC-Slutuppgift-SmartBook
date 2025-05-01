@@ -16,7 +16,7 @@ static class LibraryApp
 
     static Library library = new Library();
 
-    static public void LoadLibrary()
+    static public void LoadLibraryFromFile()
     {
         library.LoadLibraryFromFile();
     }
@@ -55,10 +55,10 @@ static class LibraryApp
                     SearchInLibrary();
                     break;
                 case '5':
-                    library.SaveLibraryToFile();
+                    SaveLibraryToFile();
                     break;
                 case '6':
-                    library.LoadLibraryFromFile();
+                    LoadLibraryFromFile();
                     break;
                 case '7':
                     Settings();
@@ -71,6 +71,11 @@ static class LibraryApp
                     break;
             }
         }
+    }
+
+    private static void SaveLibraryToFile()
+    {
+        library.SaveLibraryToFile();
     }
 
     private static void ListAllBooks()
