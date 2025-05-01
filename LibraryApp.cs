@@ -64,27 +64,31 @@ static class LibraryApp
 
     private static void SaveLibraryToFile()
     {
+        Console.Clear();
+        Console.WriteLine("Save Library to File?");
         if (ChooseYesOrNo(true))
         {
             library.SaveLibraryToFile();
             Console.WriteLine("Library Saved");
             Console.WriteLine("Press any key to continue");
             Console.ReadKey();
-        }        
+        }
     }
     static public void LoadLibraryFromFile()
     {
+        Console.Clear();
+        Console.WriteLine("Load Library From File?");
         if (ChooseYesOrNo(true))
         {
-        library.LoadLibraryFromFile();
-        Console.WriteLine("Library Loaded");
-        
+            library.LoadLibraryFromFile();
+            Console.WriteLine("Library Loaded");
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey();
         }
     }
     private static void ListAllBooks()
     {
         UserInterface.FullBookLister(library.ListAllBooks());
-        Console.ReadKey();
         Console.WriteLine("Press any key to continue");
         Console.ReadKey();
     }
@@ -233,7 +237,7 @@ static class LibraryApp
                 }
             }
         }
-            
+
     }
 
     private static Book SelectBook(Expression<Func<Book, string>> selectorExpression) => SelectItem(library.Collection, selectorExpression, "Type the title of the book to select:");
@@ -253,9 +257,9 @@ static class LibraryApp
 
         while (true)
         {
-            
+
             List<T> filtered = FilterItemInSourceBySelector(source, Selector, inputString);
-            int selectionHighestValue = addNewAvailable ? filtered.Count : filtered.Count-1;
+            int selectionHighestValue = addNewAvailable ? filtered.Count : filtered.Count - 1;
             if (selection > selectionHighestValue) selection = 0;
             if (selection < 0) selection = selectionHighestValue;
 
@@ -290,14 +294,14 @@ static class LibraryApp
         switch (expression.Body)
         {
             case MemberExpression memberExpr:
-                if (typeof(T).Name == "Category") 
+                if (typeof(T).Name == "Category")
                     return typeof(T).Name;
-                else 
+                else
                     return memberExpr.Member.Name;
             case MethodCallExpression methodCallExpr:
                 if (methodCallExpr.Object is MemberExpression objMember)
                     return objMember.Member.Name;
-                
+
                 else if (methodCallExpr.Method.ReturnType.Name == "String")
                     return typeof(T).Name;
                 break;
