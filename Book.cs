@@ -15,20 +15,20 @@ namespace LexiconC_Slutuppgift_SmartBook
             Available = true;
         }
 
-        public Book(string title, Author author, Cathegory cathegory)
+        public Book(string title, Author author, Category cathegory)
         {
             Title = title;
             Author = author;
-            Cathegory = cathegory;
+            Category = cathegory;
             Available = true;
             
         }
 
-        public Book(string title, Author author, Cathegory cathegory, string Isbn)
+        public Book(string title, Author author, Category cathegory, string Isbn)
         {
             Title = title;
             Author = author;
-            Cathegory = cathegory;
+            Category = cathegory;
             Available = true;
             ISBN = Isbn;
         }
@@ -55,10 +55,9 @@ namespace LexiconC_Slutuppgift_SmartBook
             }
         }
 
-
         public string Title { get; set; }
         public Author Author { get; set; }
-        public Cathegory Cathegory { get; set; }
+        public Category Category { get; set; }
         public bool Available { get; set; }
 
         public string AvailableAsString { get { return $"{(Available ? "Available" : "Checked Out")}"; } }
@@ -67,7 +66,7 @@ namespace LexiconC_Slutuppgift_SmartBook
         {
             return ($"Title: {Title}"
         + $"\nAuthor: {Author.ToString()}"
-        + $"\nCathegory: {Cathegory.Name}"
+        + $"\nCathegory: {Category.Name}"
         + $"\nISBN: {ISBN}"
         + $"\nAvailability: {AvailableAsString} ");
         }

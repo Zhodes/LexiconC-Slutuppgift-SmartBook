@@ -16,58 +16,47 @@ static class LibraryApp
 
     static Library library = new Library();
 
-    static public void LoadLibraryFromFile()
+    static public void loadStartingLibrary()
     {
         library.LoadLibraryFromFile();
     }
-
-    static private bool clearConsole = true;
-
     static public void MainMenu()
     {
-        ClearConsole();
+        Console.Clear();
         while (true)
         {
+            Console.Clear();
             Console.WriteLine("Please navigate through the menu by pressing the number of your choice"
                 + "\n1. Add Book"
-                + "\n2. Remove Book"
-                + "\n3. List All Books"
-                + "\n4. Search"
-                + "\n5. Save Library To File"
-                + "\n6. Load Library From File"
+                + "\n2. List All Books"
+                + "\n3. Search"
+                + "\n4. Save Library To File"
+                + "\n5. Load Library From File"
                 + "\n0. Exit the application");
-            char input = ' '; 
+            char input = ' ';
             input = Console.ReadKey(intercept: true).KeyChar;
-            ClearConsole();
-            Console.WriteLine($"you pressed {input}");
             switch (input)
             {
                 case '1':
                     AddBook();
                     break;
                 case '2':
-                    RemoveBookByTitleOrISBN();
-                    break;
-                case '3':
                     ListAllBooks();
                     break;
-                case '4':
+                case '3':
                     SearchInLibrary();
                     break;
-                case '5':
+                case '4':
                     SaveLibraryToFile();
                     break;
-                case '6':
+                case '5':
                     LoadLibraryFromFile();
-                    break;
-                case '7':
-                    Settings();
                     break;
                 case '0':
                     Environment.Exit(0);
                     break;
                 default:
-                    Console.WriteLine("Please enter some valid input (0, 1, 2, 3, 4, 5, 6, 7)");
+                    Console.WriteLine("Please enter some valid input (0, 1, 2, 3, 4, 5, 0)");
                     break;
             }
         }
@@ -75,30 +64,42 @@ static class LibraryApp
 
     private static void SaveLibraryToFile()
     {
-        library.SaveLibraryToFile();
-    }
+        if (ChooseYesOrNo(true))
+        {
+            library.SaveLibraryToFile();
+            Console.WriteLine("Library Saved");
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey();
+        }
+            
+            
 
+        
+    }
+    static public void LoadLibraryFromFile()
+    {
+        if (ChooseYesOrNo(true))
+        {
+        library.LoadLibraryFromFile();
+        Console.WriteLine("Library Loaded");
+        
+        }
+    }
     private static void ListAllBooks()
     {
-        library.ListAllBooks();
-    }
-
-    private static void ClearConsole()
-    {
-        if (clearConsole) Console.Clear();
-    }
-
-    private static void Settings()
-    {
-        throw new NotImplementedException();
+        UserInterface.FullBookLister(library.ListAllBooks());
+        Console.ReadKey();
+        Console.WriteLine("Press any key to continue");
+        Console.ReadKey();
     }
 
     private static void SearchInLibrary()
     {
-        ClearConsole();
+        Console.Clear();
         Console.WriteLine("Navigate by pressing digits"
             + "\n1. Search by Title"
             + "\n2. Search by Author"
+            + "\n3. Search by ISBN"
             + "\n0. Return to main menu"
             );
         bool validSelection = false;
@@ -120,6 +121,12 @@ static class LibraryApp
                     BookMenu(book);
                     validSelection = true;
                     break;
+                case '3':
+                    book = SelectBook(b => b.ISBN);
+                    Console.WriteLine(book.ToString());
+                    BookMenu(book);
+                    validSelection = true;
+                    break;
                 case '0':
                     validSelection = true;
                     break;
@@ -132,6 +139,7 @@ static class LibraryApp
 
     private static void BookMenu(Book book)
     {
+        Console.Clear();
         bool validInput = false;
         Console.WriteLine($"Options for {book.Title}:"
             + "\n1. Update Availability"
@@ -172,211 +180,115 @@ static class LibraryApp
     {
         Console.WriteLine($"{book.Title} is currently {book.AvailableAsString}");
         Console.WriteLine($"Would you like to {(book.Available ? "check it out" : "return it")}");
-        if(ChooseYesOrNo())book.CheckBookInAndOut();
+        if (ChooseYesOrNo()) book.CheckBookInAndOut();
     }
 
-    private static bool ChooseYesOrNo()
+    private static bool ChooseYesOrNo(bool secure = false)
     {
-        Console.WriteLine($"(Y)es/(N)o:");
-        while (true)
-        {
-            string input = Console.ReadKey(intercept: true).KeyChar.ToString().ToUpper();
-            switch (input)
-            {
-                case "Y":
-                    return true;
-                    break;
-                case "N":
-                    return false;
-                    break;
-                default:
-                    Console.WriteLine("press Y for 'Yes' or N for 'No' to make decission.");
-                    break;
-            }
-        }
-    }
-
-    private static void ChooseYesOrNo(Book book, bool secure)
-    {
-        bool validInput = false;
         if (secure)
         {
-            while (!validInput)
+            Console.WriteLine($"Yes/No:");
+            while (true)
             {
-
                 string input = Console.ReadLine();
                 switch (input)
                 {
                     case "Yes":
-                        validInput = true;
-                        break;
+                        return true;
                     case "No":
-                        validInput = true;
-                        break;
+                        return false;
                     default:
-                        Console.WriteLine("input the text 'Yes' or 'No' to make decision.");
+                        Console.WriteLine("write Yes or No to make decission.");
                         break;
 
                 }
             }
         }
-        else { ChooseYesOrNo(); }
-
-    }
-
-    private static void RemoveBookByTitleOrISBN()
-    {
-        ClearConsole();
-        Console.WriteLine("Navigate by pressing digits"
-            + "\n1. Remove by Title"
-            + "\n2. Remove by ISBN"
-            + "\n0. Return to main menu"
-            );
-        bool validSelection = false;
-        while (!validSelection)
+        else
         {
-            char input = Console.ReadKey(intercept: true).KeyChar;
-            switch (input)
+            Console.WriteLine($"(Y)es/(N)o:");
+            while (true)
             {
-                case '1':
-                    RemoveBookConfirmation(SelectBook(b => b.Title));
-                    validSelection = true;
-                    break;
-                case '2':
-                    RemoveBookConfirmation(SelectBook(b => b.ISBN));
-                    validSelection = true;
-                    break;
-                case '0':
-                    validSelection = true;
-                    break;
-                default:
-                    Console.WriteLine("Please enter a valid input");
-                    break;
+                string input = Console.ReadKey(intercept: true).KeyChar.ToString().ToUpper();
+                switch (input)
+                {
+                    case "Y":
+                        return true;
+                    case "N":
+                        return false;
+                    default:
+                        Console.WriteLine("press Y for 'Yes' or N for 'No' to make decission.");
+                        break;
+                }
             }
         }
-
+            
     }
 
-    private static Book SelectBook(Expression<Func<Book, string>> selectorExpression)
+    private static Book SelectBook(Expression<Func<Book, string>> selectorExpression) => SelectItem(library.Collection, selectorExpression, "Type the title of the book to select:");
+
+    private static Author SelectOrAddAuthor() => SelectItem(library.Authors, a => a.ToString(), "Type the name of the author:", AddAuthor);
+
+    private static Category SelectOrAddCathegory() => SelectItem(library.Categorys, c => c.Name, "Type the category:", AddCathegory);
+
+
+    private static T SelectItem<T>(IEnumerable<T> source, Expression<Func<T, string>> selectorExpression, string prompt, Func<T> onAddNew = null)
     {
-        var selector = selectorExpression.Compile();
-        string propertyName = GetPropertyName(selectorExpression);
+        var Selector = selectorExpression.Compile();
         string inputString = "";
         int selection = 0;
+        bool addNewAvailable = onAddNew != null;
+        string propertyName = GetPropertyName(selectorExpression);
+
         while (true)
         {
-            Console.Clear();
+            
+            List<T> filtered = FilterItemInSourceBySelector(source, Selector, inputString);
+            int selectionHighestValue = addNewAvailable ? filtered.Count : filtered.Count-1;
+            if (selection > selectionHighestValue) selection = 0;
+            if (selection < 0) selection = selectionHighestValue;
 
-            Console.WriteLine($"Type the {propertyName} of the book you want to select or use the arrows to go trough list.");
-            Console.WriteLine(inputString);
 
-            IEnumerable<Book> bookSelection = library.Collection
-                .Where(book => selector(book)
-                .StartsWith(inputString, StringComparison.OrdinalIgnoreCase));
+            UserInterface.RenderSelectionMenu(filtered, Selector, prompt, inputString, selection, addNewAvailable, propertyName);
 
-            foreach (var (index, book) in bookSelection.Index())
+
+            SelectionAction action = UserInterface.HandleKeyInput(ref selection, ref inputString);
+
+            switch (action)
             {
-                Console.WriteLine($"{(index == selection ? "> " : "")}{selector(book)}");
-
-            }
-
-            ConsoleKeyInfo inputKey = Console.ReadKey(intercept: true);
-            switch (inputKey.Key)
-            {
-                case ConsoleKey.Enter:
-                    return bookSelection.ElementAt(selection);
-                case ConsoleKey.Escape:
+                case SelectionAction.Submit:
+                    return selection == filtered.Count ? onAddNew() : filtered[selection];
+                case SelectionAction.Cancel:
                     MainMenu();
                     break;
-                case ConsoleKey.DownArrow:
-                    if (selection < bookSelection.Count() - 1)
-                        selection++;
-                    break;
-                case ConsoleKey.UpArrow:
-                    if (selection > 0)
-                        selection--;
-                    break;
-                default:
-                    inputString += inputKey.KeyChar;
-                    break;
             }
-
         }
     }
 
-    private static Author SelectOrAddAuthor()
+    private static List<T> FilterItemInSourceBySelector<T>(IEnumerable<T> source, Func<T, string> Selector, string inputString)
     {
-        string inputString = "";
-        int selection = 0;
-        while (true)
-        {
-            Console.Clear();
-
-            Console.WriteLine($"Type the name of the author you want to select or use the arrows to go trough list.");
-            Console.WriteLine(inputString);
-
-
-            IEnumerable<Author> authorSelection = library.Authors
-                .Where(author => author.ToString()
-                .StartsWith(inputString, StringComparison.OrdinalIgnoreCase));
-
-            //if(authorSelection.Count() == 0) selection = 0;
-            if (selection > authorSelection.Count() - 1) selection = authorSelection.Count() - 1;
-            Console.WriteLine($"{(-1 == selection ? "> " : "")}Add Author");
-
-            foreach (var (index, author) in authorSelection.Index())
-            {
-                Console.WriteLine($"{(index == selection ? "> " : "")}{author.ToString()}");
-
-            }
-
-
-            ConsoleKeyInfo inputKey = Console.ReadKey(intercept: true);
-            if (inputKey.Key == ConsoleKey.Enter)
-            {
-                if (selection == -1) return AddAuthor();
-                return authorSelection.ElementAt(selection);
-            }
-            else if (inputKey.Key == ConsoleKey.Backspace)
-            {
-                inputString = inputString.Remove(inputString.Length - 1);
-            }
-            else if (inputKey.Key == ConsoleKey.Escape)
-            {
-                MainMenu();
-            }
-            else if (inputKey.Key == ConsoleKey.DownArrow)
-            {
-                if (selection < authorSelection.Count() - 1)
-                    selection++;
-            }
-            else if (inputKey.Key == ConsoleKey.UpArrow)
-            {
-                if (selection > -1)
-                    selection--;
-            }
-            else
-            {
-
-                char inputChar = inputKey.KeyChar;
-                inputString += inputChar;
-            }
-
-        }
+        return source
+                        .Where(item => Selector(item)
+                        .StartsWith(inputString, StringComparison.OrdinalIgnoreCase))
+                        .OrderBy(Selector)
+                        .ToList();
     }
 
-    private static string GetPropertyName(Expression<Func<Book, string>> expression)
+    private static string GetPropertyName<T>(Expression<Func<T, string>> expression)
     {
         switch (expression.Body)
         {
             case MemberExpression memberExpr:
-                return memberExpr.Member.Name;
-
+                if (typeof(T).Name == "Category") 
+                    return typeof(T).Name;
+                else 
+                    return memberExpr.Member.Name;
             case MethodCallExpression methodCallExpr:
                 if (methodCallExpr.Object is MemberExpression objMember)
-                {
                     return objMember.Member.Name;
-                }
+                
+                else if (methodCallExpr.Method.ReturnType.Name == "String")
+                    return typeof(T).Name;
                 break;
         }
 
@@ -385,14 +297,11 @@ static class LibraryApp
 
     private static void RemoveBookConfirmation(Book book)
     {
-
-        ClearConsole();
+        Console.Clear();
         Console.WriteLine($"You have selected the following book:\n"
         + book.ToString()
         + "\n Would you like to remove it?");
-        if(ChooseYesOrNo()) library.RemoveBook(book);
-        
-
+        if (ChooseYesOrNo(true)) library.RemoveBook(book);
 
     }
 
@@ -401,69 +310,9 @@ static class LibraryApp
         Book book = new Book();
         AddTitle(book);
         book.Author = SelectOrAddAuthor();
-        book.Cathegory = SelectOrAddCathegory();
+        book.Category = SelectOrAddCathegory();
         AddISBN(book);
         library.AddBookToCollection(book);
-    }
-
-    private static Cathegory SelectOrAddCathegory()
-    {
-
-        string inputString = "";
-        int selection = 0;
-        while (true)
-        {
-            Console.WriteLine($"Type the cathegory you want to select or use the arrows to go trough list.");
-            Console.WriteLine(inputString);
-
-
-            IEnumerable<Cathegory> cathegorySelection = library.Cathegorys
-                .Where(cathegory => cathegory.Name
-                .StartsWith(inputString, StringComparison.OrdinalIgnoreCase));
-
-
-            if (selection > cathegorySelection.Count() - 1) selection = cathegorySelection.Count() - 1;
-            Console.WriteLine($"{(-1 == selection ? "> " : "")}Add Cathegory");
-
-            foreach (var (index, cathegory) in cathegorySelection.Index())
-            {
-                Console.WriteLine($"{(index == selection ? "> " : "")}{cathegory.Name}");
-
-            }
-
-
-            ConsoleKeyInfo inputKey = Console.ReadKey(intercept: true);
-            if (inputKey.Key == ConsoleKey.Enter)
-            {
-                if (selection == -1) return AddCathegory();
-                return cathegorySelection.ElementAt(selection);
-            }
-            else if (inputKey.Key == ConsoleKey.Backspace)
-            {
-                inputString = inputString.Remove(inputString.Length - 1);
-            }
-            else if (inputKey.Key == ConsoleKey.Escape)
-            {
-                MainMenu();
-            }
-            else if (inputKey.Key == ConsoleKey.DownArrow)
-            {
-                if (selection < cathegorySelection.Count() - 1)
-                    selection++;
-            }
-            else if (inputKey.Key == ConsoleKey.UpArrow)
-            {
-                if (selection > -1)
-                    selection--;
-            }
-            else
-            {
-
-                char inputChar = inputKey.KeyChar;
-                inputString += inputChar;
-            }
-
-        }
     }
 
     private static void AddISBN(Book book)
@@ -482,11 +331,11 @@ static class LibraryApp
         }
     }
 
-    private static Cathegory AddCathegory()
+    private static Category AddCathegory()
     {
         Console.WriteLine("Write the Cathegory you would like to add.");
         bool isvalidInput = false;
-        Cathegory cathegory = new Cathegory();
+        Category cathegory = new Category();
         while (!isvalidInput)
         {
             cathegory.Name = Console.ReadLine();
@@ -515,11 +364,11 @@ static class LibraryApp
         Console.WriteLine("Enter the authors last name:");
         author.LastName = Console.ReadLine();
         try { library.TryAddAuthor(author); }
-        catch (ArgumentException e) 
+        catch (ArgumentException e)
         {
             Console.WriteLine(e.Message);
             SelectOrAddAuthor();
-            
+
         }
         return author;
     }
@@ -531,4 +380,5 @@ static class LibraryApp
         book.Title = Console.ReadLine();
 
     }
+
 }

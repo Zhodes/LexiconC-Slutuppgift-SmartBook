@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            LibraryApp.LoadLibraryFromFile();
+            LibraryApp.loadStartingLibrary();
             LibraryApp.MainMenu();
 
            

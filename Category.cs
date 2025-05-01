@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace LexiconC_Slutuppgift_SmartBook
 {
-    public struct Cathegory
+    public struct Category
     {
-        public Cathegory()
+        public Category()
         {
             
         }
-        public Cathegory(string name)
+        public Category(string name)
         {
              Name = name;
         }

@@ -11,7 +11,7 @@ namespace LexiconC_Slutuppgift_SmartBook
     {
         private List<Book> collection = new List<Book>();
         private List<Author> authors = new List<Author>();
-        private List<Cathegory> cathegorys = new List<Cathegory>();
+        private List<Category> categorys = new List<Category>();
 
         public List<Book> Collection
         { 
@@ -28,17 +28,17 @@ namespace LexiconC_Slutuppgift_SmartBook
             private set { authors = value; }
         }
 
-        public List<Cathegory> Cathegorys
+        public List<Category> Categorys
         {
             get
             {
-                return cathegorys;
+                return categorys;
             }
 
             private set
             {
 
-                cathegorys = value;
+                categorys = value;
             }
         }
         public void TrySetISBN(Book book, string ISBN)
@@ -61,18 +61,18 @@ namespace LexiconC_Slutuppgift_SmartBook
         public void AddBookToCollection(Book book)
         {
             if (!authors.Contains(book.Author)) throw new ArgumentException("Author must exist in the library.");
-            if (!cathegorys.Contains(book.Cathegory)) throw new ArgumentException("Category must exist in the library.");
+            if (!categorys.Contains(book.Category)) throw new ArgumentException("Category must exist in the library.");
             if (checkISBN(book.ISBN)) throw new ArgumentException("There already exist a book with that ISBN");
             Collection.Add(book);
         }
 
-        public void TryAddCathegory(Cathegory cathegory)
+        public void TryAddCathegory(Category cathegory)
         {
-            if (cathegorys.Any(b => b.Equals(cathegory)))
+            if (categorys.Any(b => b.Equals(cathegory)))
             {
                 throw new ArgumentException("That title already exists");
             }
-            else cathegorys.Add(cathegory);
+            else categorys.Add(cathegory);
         }
 
 
@@ -86,29 +86,27 @@ namespace LexiconC_Slutuppgift_SmartBook
             else authors.Add(author);
         }
 
-        public void ListAllBooks()
+        public List<Book> ListAllBooks()
         {
             var orderedBooks = Collection
             .OrderBy(book => book.Title);
-
-            foreach (var (index, book) in orderedBooks.Index())
-            {
-                Console.WriteLine($"{index + 1} {book.Title}");
-            }
+            List<Book> orderedCollection = orderedBooks.ToList();
+            return orderedCollection;
+            
         }
 
         public void LoadLibraryFromFile()
         {
             Collection = JsonSerializer.Deserialize<List<Book>>(File.ReadAllText("collection.json"));
             authors = JsonSerializer.Deserialize<List<Author>>(File.ReadAllText("authors.json"));
-            cathegorys = JsonSerializer.Deserialize<List<Cathegory>>(File.ReadAllText("cathegorys.json"));
+            categorys = JsonSerializer.Deserialize<List<Category>>(File.ReadAllText("categorys.json"));
         }
 
         public void SaveLibraryToFile()
         {
             File.WriteAllText("collection.json", JsonSerializer.Serialize(Collection));
             File.WriteAllText("authors.json", JsonSerializer.Serialize(authors));
-            File.WriteAllText("cathegorys.json", JsonSerializer.Serialize(cathegorys));
+            File.WriteAllText("categorys.json", JsonSerializer.Serialize(categorys));
         }
 
         public void RemoveBook(Book book)
