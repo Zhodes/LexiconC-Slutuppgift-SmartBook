@@ -41,7 +41,7 @@ namespace LexiconC_Slutuppgift_SmartBook
                 categorys = value;
             }
         }
-        public void TrySetISBN(Book book, string ISBN)
+        public void SetISBNWithValidation(Book book, string ISBN)
         {
             if (checkISBN(ISBN))
             {
@@ -66,7 +66,7 @@ namespace LexiconC_Slutuppgift_SmartBook
             Collection.Add(book);
         }
 
-        public void TryAddCathegory(Category cathegory)
+        public void TryAddCategory(Category cathegory)
         {
             if (categorys.Any(b => b.Equals(cathegory)))
             {

@@ -70,11 +70,7 @@ static class LibraryApp
             Console.WriteLine("Library Saved");
             Console.WriteLine("Press any key to continue");
             Console.ReadKey();
-        }
-            
-            
-
-        
+        }        
     }
     static public void LoadLibraryFromFile()
     {
@@ -110,21 +106,15 @@ static class LibraryApp
             switch (input)
             {
                 case '1':
-                    Book book = SelectBook(b => b.Title);
-                    Console.WriteLine(book.ToString());
-                    BookMenu(book);
+                    SearchByTitle();
                     validSelection = true;
                     break;
                 case '2':
-                    book = SelectBook(b => b.Author.ToString());
-                    Console.WriteLine(book.ToString());
-                    BookMenu(book);
+                    SearchByAuthor();
                     validSelection = true;
                     break;
                 case '3':
-                    book = SelectBook(b => b.ISBN);
-                    Console.WriteLine(book.ToString());
-                    BookMenu(book);
+                    SearchByISBN();
                     validSelection = true;
                     break;
                 case '0':
@@ -135,6 +125,27 @@ static class LibraryApp
                     break;
             }
         }
+    }
+
+    private static void SearchByISBN()
+    {
+        Book book = SelectBook(b => b.ISBN);
+        Console.WriteLine(book.ToString());
+        BookMenu(book);
+    }
+
+    private static void SearchByAuthor()
+    {
+        Book book = SelectBook(b => b.Author.ToString());
+        Console.WriteLine(book.ToString());
+        BookMenu(book);
+    }
+
+    private static void SearchByTitle()
+    {
+        Book book = SelectBook(b => b.Title);
+        Console.WriteLine(book.ToString());
+        BookMenu(book);
     }
 
     private static void BookMenu(Book book)
@@ -229,7 +240,7 @@ static class LibraryApp
 
     private static Author SelectOrAddAuthor() => SelectItem(library.Authors, a => a.ToString(), "Type the name of the author:", AddAuthor);
 
-    private static Category SelectOrAddCathegory() => SelectItem(library.Categorys, c => c.Name, "Type the category:", AddCathegory);
+    private static Category SelectOrAddCategory() => SelectItem(library.Categorys, c => c.Name, "Type the category:", AddCategory);
 
 
     private static T SelectItem<T>(IEnumerable<T> source, Expression<Func<T, string>> selectorExpression, string prompt, Func<T> onAddNew = null)
@@ -310,7 +321,7 @@ static class LibraryApp
         Book book = new Book();
         AddTitle(book);
         book.Author = SelectOrAddAuthor();
-        book.Category = SelectOrAddCathegory();
+        book.Category = SelectOrAddCategory();
         AddISBN(book);
         library.AddBookToCollection(book);
     }
@@ -324,36 +335,36 @@ static class LibraryApp
             string input = Console.ReadLine();
             try
             {
-                library.TrySetISBN(book, input);
+                library.SetISBNWithValidation(book, input);
                 isValidISBN = true;
             }
             catch (ArgumentException e) { Console.WriteLine(e.Message); }
         }
     }
 
-    private static Category AddCathegory()
+    private static Category AddCategory()
     {
-        Console.WriteLine("Write the Cathegory you would like to add.");
+        Console.WriteLine("Write the Category you would like to add.");
         bool isvalidInput = false;
-        Category cathegory = new Category();
+        Category category = new Category();
         while (!isvalidInput)
         {
-            cathegory.Name = Console.ReadLine();
+            category.Name = Console.ReadLine();
             try
             {
-                library.TryAddCathegory(cathegory);
+                library.TryAddCategory(category);
                 isvalidInput = true;
 
             }
             catch (ArgumentException e)
             {
                 Console.WriteLine(e.Message);
-                SelectOrAddCathegory();
+                SelectOrAddCategory();
 
             }
 
         }
-        return cathegory;
+        return category;
     }
 
     private static Author AddAuthor()
