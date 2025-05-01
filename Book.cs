@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace LexiconC_Slutuppgift_SmartBook
 {
-    class Book
+    public class Book
     {
 
         
         public Book()
         {
-            
+            Available = true;
         }
 
-        public Book(string title, Author author, string cathegory)
+        public Book(string title, Author author, Cathegory cathegory)
         {
             Title = title;
             Author = author;
@@ -24,7 +24,7 @@ namespace LexiconC_Slutuppgift_SmartBook
             
         }
 
-        public Book(string title, Author author, string cathegory, string Isbn)
+        public Book(string title, Author author, Cathegory cathegory, string Isbn)
         {
             Title = title;
             Author = author;
@@ -58,7 +58,7 @@ namespace LexiconC_Slutuppgift_SmartBook
 
         public string Title { get; set; }
         public Author Author { get; set; }
-        public string Cathegory { get; set; }
+        public Cathegory Cathegory { get; set; }
         public bool Available { get; set; }
 
         public string AvailableAsString { get { return $"{(Available ? "Available" : "Checked Out")}"; } }
@@ -67,7 +67,7 @@ namespace LexiconC_Slutuppgift_SmartBook
         {
             return ($"Title: {Title}"
         + $"\nAuthor: {Author.ToString()}"
-        + $"\nCathegory: {Cathegory}"
+        + $"\nCathegory: {Cathegory.Name}"
         + $"\nISBN: {ISBN}"
         + $"\nAvailability: {AvailableAsString} ");
         }
@@ -77,5 +77,7 @@ namespace LexiconC_Slutuppgift_SmartBook
             Available = !Available;
             Console.WriteLine( $"{Title} has been {(Available ? "returned" : "checked out" )}");
         }
+
+
     }
 }
