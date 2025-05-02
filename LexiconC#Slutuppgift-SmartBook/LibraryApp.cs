@@ -147,6 +147,7 @@ static class LibraryApp
 
     private static void SearchByTitle()
     {
+
         Book book = SelectBook(b => b.Title);
         Console.WriteLine(book.ToString());
         BookMenu(book);
@@ -323,6 +324,7 @@ static class LibraryApp
     private static void AddBook()
     {
         Book book = new Book();
+        Console.Clear();
         AddTitle(book);
         book.Author = SelectOrAddAuthor();
         book.Category = SelectOrAddCategory();

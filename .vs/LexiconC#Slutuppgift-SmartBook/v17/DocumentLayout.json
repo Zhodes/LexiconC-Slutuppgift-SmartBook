@@ -1,0 +1,162 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Arbetskonto\\Programmering\\Lexicon\\LexiconC#Slutuppgift-SmartBook\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D92B7747-F114-4620-966C-902095A5D4AA}|..\\SmartBookXUnitTestProject\\SmartBookXUnitTestProject.csproj|c:\\users\\arbetskonto\\programmering\\lexicon\\smartbookxunittestproject\\smartbookxunittestproject.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D92B7747-F114-4620-966C-902095A5D4AA}|..\\SmartBookXUnitTestProject\\SmartBookXUnitTestProject.csproj|c:\\users\\arbetskonto\\programmering\\lexicon\\smartbookxunittestproject\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{530EB98F-E7FA-4896-BB7E-75D772FE5DC5}|LexiconC#Slutuppgift-SmartBook.csproj|c:\\users\\arbetskonto\\programmering\\lexicon\\lexiconc#slutuppgift-smartbook\\libraryapp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{530EB98F-E7FA-4896-BB7E-75D772FE5DC5}|LexiconC#Slutuppgift-SmartBook.csproj|solutionrelative:libraryapp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{530EB98F-E7FA-4896-BB7E-75D772FE5DC5}|LexiconC#Slutuppgift-SmartBook.csproj|c:\\users\\arbetskonto\\programmering\\lexicon\\lexiconc#slutuppgift-smartbook\\library.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{530EB98F-E7FA-4896-BB7E-75D772FE5DC5}|LexiconC#Slutuppgift-SmartBook.csproj|solutionrelative:library.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{530EB98F-E7FA-4896-BB7E-75D772FE5DC5}|LexiconC#Slutuppgift-SmartBook.csproj|c:\\users\\arbetskonto\\programmering\\lexicon\\lexiconc#slutuppgift-smartbook\\userinterface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{530EB98F-E7FA-4896-BB7E-75D772FE5DC5}|LexiconC#Slutuppgift-SmartBook.csproj|solutionrelative:userinterface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{530EB98F-E7FA-4896-BB7E-75D772FE5DC5}|LexiconC#Slutuppgift-SmartBook.csproj|c:\\users\\arbetskonto\\programmering\\lexicon\\lexiconc#slutuppgift-smartbook\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{530EB98F-E7FA-4896-BB7E-75D772FE5DC5}|LexiconC#Slutuppgift-SmartBook.csproj|solutionrelative:book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{530EB98F-E7FA-4896-BB7E-75D772FE5DC5}|LexiconC#Slutuppgift-SmartBook.csproj|c:\\users\\arbetskonto\\programmering\\lexicon\\lexiconc#slutuppgift-smartbook\\author.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{530EB98F-E7FA-4896-BB7E-75D772FE5DC5}|LexiconC#Slutuppgift-SmartBook.csproj|solutionrelative:author.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{530EB98F-E7FA-4896-BB7E-75D772FE5DC5}|LexiconC#Slutuppgift-SmartBook.csproj|c:\\users\\arbetskonto\\programmering\\lexicon\\lexiconc#slutuppgift-smartbook\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{530EB98F-E7FA-4896-BB7E-75D772FE5DC5}|LexiconC#Slutuppgift-SmartBook.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SmartBookXUnitTestProject",
+              "DocumentMoniker": "C:\\Users\\Arbetskonto\\Programmering\\Lexicon\\SmartBookXUnitTestProject\\SmartBookXUnitTestProject.csproj",
+              "RelativeDocumentMoniker": "..\\SmartBookXUnitTestProject\\SmartBookXUnitTestProject.csproj",
+              "ToolTip": "C:\\Users\\Arbetskonto\\Programmering\\Lexicon\\SmartBookXUnitTestProject\\SmartBookXUnitTestProject.csproj",
+              "RelativeToolTip": "..\\SmartBookXUnitTestProject\\SmartBookXUnitTestProject.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-05-02T08:11:48.029Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UserInterface.cs",
+              "DocumentMoniker": "C:\\Users\\Arbetskonto\\Programmering\\Lexicon\\LexiconC#Slutuppgift-SmartBook\\UserInterface.cs",
+              "RelativeDocumentMoniker": "UserInterface.cs",
+              "ToolTip": "C:\\Users\\Arbetskonto\\Programmering\\Lexicon\\LexiconC#Slutuppgift-SmartBook\\UserInterface.cs",
+              "RelativeToolTip": "UserInterface.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAowHAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-01T20:57:53.57Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UnitTest1.cs",
+              "DocumentMoniker": "C:\\Users\\Arbetskonto\\Programmering\\Lexicon\\SmartBookXUnitTestProject\\UnitTest1.cs",
+              "RelativeDocumentMoniker": "..\\SmartBookXUnitTestProject\\UnitTest1.cs",
+              "ToolTip": "C:\\Users\\Arbetskonto\\Programmering\\Lexicon\\SmartBookXUnitTestProject\\UnitTest1.cs",
+              "RelativeToolTip": "..\\SmartBookXUnitTestProject\\UnitTest1.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAwwEkAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-01T20:47:43.611Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "LibraryApp.cs",
+              "DocumentMoniker": "C:\\Users\\Arbetskonto\\Programmering\\Lexicon\\LexiconC#Slutuppgift-SmartBook\\LibraryApp.cs",
+              "RelativeDocumentMoniker": "LibraryApp.cs",
+              "ToolTip": "C:\\Users\\Arbetskonto\\Programmering\\Lexicon\\LexiconC#Slutuppgift-SmartBook\\LibraryApp.cs",
+              "RelativeToolTip": "LibraryApp.cs",
+              "ViewState": "AgIAAFUAAAAAAAAAAAAAAEgBAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T14:33:29.205Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Library.cs",
+              "DocumentMoniker": "C:\\Users\\Arbetskonto\\Programmering\\Lexicon\\LexiconC#Slutuppgift-SmartBook\\Library.cs",
+              "RelativeDocumentMoniker": "Library.cs",
+              "ToolTip": "C:\\Users\\Arbetskonto\\Programmering\\Lexicon\\LexiconC#Slutuppgift-SmartBook\\Library.cs",
+              "RelativeToolTip": "Library.cs",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAmwFgAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T14:33:08.085Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Book.cs",
+              "DocumentMoniker": "C:\\Users\\Arbetskonto\\Programmering\\Lexicon\\LexiconC#Slutuppgift-SmartBook\\Book.cs",
+              "RelativeDocumentMoniker": "Book.cs",
+              "ToolTip": "C:\\Users\\Arbetskonto\\Programmering\\Lexicon\\LexiconC#Slutuppgift-SmartBook\\Book.cs",
+              "RelativeToolTip": "Book.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADkAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T14:32:28.672Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Author.cs",
+              "DocumentMoniker": "C:\\Users\\Arbetskonto\\Programmering\\Lexicon\\LexiconC#Slutuppgift-SmartBook\\Author.cs",
+              "RelativeDocumentMoniker": "Author.cs",
+              "ToolTip": "C:\\Users\\Arbetskonto\\Programmering\\Lexicon\\LexiconC#Slutuppgift-SmartBook\\Author.cs",
+              "RelativeToolTip": "Author.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T14:32:44.854Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Arbetskonto\\Programmering\\Lexicon\\LexiconC#Slutuppgift-SmartBook\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Arbetskonto\\Programmering\\Lexicon\\LexiconC#Slutuppgift-SmartBook\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T14:09:50.779Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
